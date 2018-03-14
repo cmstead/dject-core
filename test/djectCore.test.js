@@ -71,7 +71,7 @@ describe('djectCore', function () {
 
         assert.equal(typeof testBuilder, 'function');
         assert.equal(testBuilder.name, 'moduleBuilder');
-        assert.equal(JSON.stringify(testBuilder.dependencies), '["bar"]');
+        assert.equal(JSON.stringify(container.getDependencies('testModule')), '["bar"]');
     });
     
 

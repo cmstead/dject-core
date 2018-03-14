@@ -26,11 +26,19 @@
             return moduleFactory.apply(null, dependencies.map(build));
         }
 
-        return set(moduleBuilder, 'dependencies', dependencies);
+        function getDependencies() {
+            return dependencies.slice(0);
+        }
+
+        return set(moduleBuilder, 'dependencies', getDependencies);
+    }
+
+    function isRegistered(moduleName) {
+        return typeof registry[moduleName] !== 'undefined';
     }
 
     function throwOnRegistered(moduleName) {
-        if(typeof registry[moduleName] !== 'undefined') {
+        if (isRegistered(moduleName)) {
             throw new Error('Cannot reregister module ' + moduleName);
         }
     }
@@ -57,13 +65,22 @@
         return Object.keys(registry).reduce(attachRegistryKey, {});
     }
 
-    function isRegistered(moduleName) {
-        return typeof registry[moduleName] !== 'undefined';
+    function throwOnUnregistered(moduleName) {
+        if (!isRegistered(moduleName)) {
+            throw new Error('Module ' + moduleName + ' has not been registered');
+        }
+    }
+
+    function getDependencies(moduleName) {
+        throwOnUnregistered(moduleName);
+        
+        return registry[moduleName].dependencies();
     }
 
     api.build = build;
     api.getModuleRegistry = getModuleRegistry;
     api.isRegistered = isRegistered;
+    api.getDependencies = getDependencies;
     api.override = override;
     api.register = register;
 
