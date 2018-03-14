@@ -42,6 +42,16 @@ describe('djectCore', function () {
     });
     
     
+    
+    it('should provide a way to verify if a module was registered', function () {
+        container.register('testModule', () => 'foo', []);
+
+        const result = container.isRegistered('testModule');
+
+        assert.isTrue(result);
+    });
+    
+
     it('should allow overriding of an existing module', function () {
         container
             .register('testModule', () => 'foo', [])

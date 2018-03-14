@@ -57,8 +57,13 @@
         return Object.keys(registry).reduce(attachRegistryKey, {});
     }
 
+    function isRegistered(moduleName) {
+        return typeof registry[moduleName] !== 'undefined';
+    }
+
     api.build = build;
     api.getModuleRegistry = getModuleRegistry;
+    api.isRegistered = isRegistered;
     api.override = override;
     api.register = register;
 
