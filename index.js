@@ -12,7 +12,19 @@
     var registry = {};
     var api = {};
 
+
+    function isRegistered(moduleName) {
+        return typeof registry[moduleName] !== 'undefined';
+    }
+
+    function throwOnUnregistered(moduleName) {
+        if (!isRegistered(moduleName)) {
+            throw new Error('Module ' + moduleName + ' has not been registered');
+        }
+    }
+
     function build(moduleName) {
+        throwOnUnregistered(moduleName);
         return registry[moduleName]();
     }
 
@@ -31,10 +43,6 @@
         }
 
         return set(moduleBuilder, 'dependencies', getDependencies);
-    }
-
-    function isRegistered(moduleName) {
-        return typeof registry[moduleName] !== 'undefined';
     }
 
     function throwOnRegistered(moduleName) {
@@ -65,15 +73,9 @@
         return Object.keys(registry).reduce(attachRegistryKey, {});
     }
 
-    function throwOnUnregistered(moduleName) {
-        if (!isRegistered(moduleName)) {
-            throw new Error('Module ' + moduleName + ' has not been registered');
-        }
-    }
-
     function getDependencies(moduleName) {
         throwOnUnregistered(moduleName);
-        
+
         return registry[moduleName].dependencies();
     }
 
