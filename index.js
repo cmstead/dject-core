@@ -23,6 +23,12 @@
         }
     }
 
+    function throwOnImproperOverride(moduleName) {
+        if (!isRegistered(moduleName)) {
+            throw new Error('Cannot override module, ' + moduleName + '; it has not been registered');
+        }
+    }
+
     function build(moduleName) {
         throwOnUnregistered(moduleName);
         return registry[moduleName]();
@@ -62,6 +68,7 @@
     }
 
     function override(moduleName, moduleFactory, dependencies) {
+        throwOnImproperOverride(moduleName);
         return registerModule(moduleName, moduleFactory, dependencies);
     }
 
