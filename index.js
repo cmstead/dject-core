@@ -86,7 +86,12 @@
         return registry[moduleName].dependencies();
     }
 
+    function getModuleBuilder(moduleName) {
+        return registry[moduleName];
+    }
+
     api.build = build;
+    api.getModuleBuilder = getModuleBuilder;
     api.getModuleRegistry = getModuleRegistry;
     api.isRegistered = isRegistered;
     api.getDependencies = getDependencies;
