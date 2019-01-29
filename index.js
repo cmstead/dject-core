@@ -48,6 +48,12 @@
             return dependencies.slice(0);
         }
 
+        Object.defineProperty(moduleBuilder, 'originalModule', {
+            value: moduleFactory,
+            writeable: false,
+            configurable: false
+        });
+
         return set(moduleBuilder, 'dependencies', getDependencies);
     }
 
