@@ -121,6 +121,7 @@
     }
 
     api.build = build;
+    api.buildWithObject = buildWithObject;
     api.getModuleBuilder = getModuleBuilder;
     api.getModuleRegistry = getModuleRegistry;
     api.isRegistered = isRegistered;
