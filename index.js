@@ -55,6 +55,7 @@
             var dependencyMap = dependencies.reduce(
                 function (result, dependencyName, index) {
                     result[dependencyName] = dependencyInstances[index];
+                    return result;
                 },
                 {}
             );
